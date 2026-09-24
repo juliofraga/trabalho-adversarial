@@ -156,3 +156,51 @@ Estratégia 2: superestimar ou subestimar a urgência e o impacto
 ```
 
 ---
+
+# 6. Informações observáveis
+
+## 6.1 Informações observáveis pelo solicitante
+
+O solicitante consegue observar, dependendo das permissões e configurações do sistema:
+
+- o próprio chamado;
+- a descrição registrada;
+- a urgência e impacto informados;
+- a prioridade atribuída pelo sistema;
+- o estado do chamado;
+- atualizações realizadas no chamado;
+- informações relacionadas ao atendimento;
+- eventualmente, informações sobre SLA e prazo de atendimento.
+
+O solicitante normalmente não possui acesso completo às informações internas utilizadas pelos técnicos para organizar toda a fila de atendimento.
+
+## 6.2 Informações observáveis pelo técnico
+
+O técnico pode observar:
+
+- descrição do chamado;
+- urgência informada pelo solicitante;
+- impacto informado pelo solicitante;
+- prioridade calculada pelo sistema;
+- categoria do chamado;
+- informações do usuário;
+- histórico do chamado;
+- estado atual do atendimento;
+
+## 6.3 Informações observáveis pelo sistema
+
+O sistema possui acesso aos dados registrados no chamado e às regras utilizadas para determinar sua prioridade.
+
+Entre essas informações estão:
+
+- urgência;
+- impacto;
+- prioridade;
+- categoria;
+- usuário;
+- grupo responsável;
+- histórico;
+- regras de negócio;
+- configurações de SLA.
+
+---
