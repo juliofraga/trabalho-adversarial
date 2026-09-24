@@ -304,3 +304,51 @@ Por exemplo:
 Nesse caso, a prioridade calculada pode não representar completamente a necessidade real de atendimento.
 
 ---
+
+# 9. Síntese do cenário adversarial
+
+O cenário pode ser resumido da seguinte forma:
+
+```text
+             ┌───────────────────┐
+             │    SOLICITANTE    │
+             └─────────┬─────────┘
+                       │
+                       │ declara urgência e impacto
+                       ▼
+                ┌──────────────┐
+                │   CHAMADO    │
+                └──────┬───────┘
+                       │
+                       │ entra na fila de atendimento
+                       ▼
+             ┌───────────────────┐
+             │      TÉCNICO      │
+             └─────────┬─────────┘
+                       │
+                       │ avalia os chamados na fila de atendimento
+                       ▼
+              ┌─────────────────┐
+              │    SISTEMA      │
+              │ Urgência +      │
+              │ Impacto =       |
+              | Prioridade      │
+              └────────┬────────┘
+                       │
+                       ▼
+                ┌─────────────┐
+                │ ATENDIMENTO │
+                └─────────────┘
+                       │
+                       ▼
+                resultado observado
+                       │
+                       ▼
+                 próxima rodada
+```
+
+O caráter adversarial surge porque o resultado da interação depende das decisões de diferentes participantes, cujos objetivos não são necessariamente iguais.
+
+O solicitante pode ter incentivo para aumentar a urgência declarada para obter atendimento mais rápido, enquanto o técnico precisa distribuir sua capacidade de atendimento entre diferentes chamados e determinar o impacto de cada problema.
+
+Dessa forma, as decisões tomadas em uma rodada podem alterar o comportamento dos participantes nas rodadas seguintes, permitindo analisar o sistema tanto como um **modelo estratégico estático**, considerando as decisões em uma interação isolada, quanto como um **modelo estratégico dinâmico**, considerando a adaptação dos participantes ao observar os resultados das interações anteriores.
