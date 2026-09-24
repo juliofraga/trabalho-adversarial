@@ -305,7 +305,17 @@ Nesse caso, a prioridade calculada pode não representar completamente a necessi
 
 ---
 
-# 9. Síntese do cenário adversarial
+# 9. Organização dos elementos principais do cenário adversarial
+
+| Ator | Objetivo | Ações ou capacidades | Informações observáveis | Restrições ou custos |
+| :--- | :--- | :--- | :--- | :--- |
+| **Ator 1: Solicitante** | - Obter a resolução do seu problema no menor tempo possível<br>- Reduzir o tempo de espera pelo atendimento<br>- Minimizar o impacto da indisponibilidade do serviço<br>- Receber atendimento dentro do SLA aplicável<br>- Obter prioridade compatível com a importância percebida | - Criar e descrever chamado<br>- Informar a urgência e o impacto percebidos<br>- Atualizar informações e acompanhar o andamento<br>- Decisão estratégica de declarar a urgência/impacto real, superestimar deliberadamente ou superestimar de forma não intencional | - O próprio chamado e a descrição registrada<br>- Urgência e impacto informados por ele<br>- Prioridade atribuída pelo sistema<br>- Estado atual do chamado e atualizações do atendimento<br>- Informações de SLA e prazo (dependendo do sistema) | - Necessidade de fornecer informações mínimas e descrever/justificar o problema<br>- Acesso limitado às informações internas e à fila de suporte<br>- Dependência da capacidade da equipe<br>- Perda de confiabilidade/credibilidade em caso de superestimação recorrente |
+| **Ator 2: Técnico de Suporte** | - Resolver os chamados adequadamente respeitando a prioridade e os SLAs<br>- Avaliar corretamente o impacto de cada chamado<br>- Utilizar recursos de atendimento de forma eficiente<br>- Reduzir o tempo de resolução<br>- Evitar que chamados de alto impacto fiquem sem atendimento | - Visualizar e analisar a descrição dos chamados<br>- Avaliar a urgência e o impacto real do chamado<br>- Alterar ou confirmar informações de classificação<br>- Atender, atualizar o estado e resolver o chamado<br>- Decisão estratégica de avaliar conforme a situação ou superestimar/subestimar a classificação | - Descrição do chamado<br>- Urgência e impacto informados pelo solicitante<br>- Prioridade calculada pelo sistema<br>- Categoria, informações do usuário e histórico do chamado<br>- Estado atual do atendimento | - Tempo limitado e capacidade para poucos chamados simultâneos<br>- Necessidade de respeitar prioridades e cumprir SLAs estabelecidos<br>- Complexidade técnica dos problemas<br>- Necessidade de justificar determinadas decisões<br>- Lidar com informações imprecisas ou incompletas sobre o problema |
+| **Ator 3: Sistema GLPI** | - Produzir uma ordem de atendimento coerente com a urgência e o impacto dos chamados<br>- Evitar que decisões individuais provoquem uma distribuição inadequada dos recursos de suporte | - Processar as informações fornecidas (urgência e impacto)<br>- Calcular e atribuir a prioridade do chamado segundo a matriz e regras de negócio configuradas | - Dados registrados no chamado (urgência, impacto, prioridade, categoria, usuário, grupo responsável)<br>- Histórico do chamado<br>- Regras de negócio e configurações de SLA | - Dependência direta da qualidade e veracidade das informações fornecidas pelos participantes<br>- Rigidez da matriz de prioridade configurada<br>- Incapacidade de distinguir autonomamente informações verdadeiras de declarações estratégicas/manipuladas<br>- Falta de contexto sobre fatores externos não representados na matriz (ex: prazos regulatórios fora do sistema) |
+
+---
+
+# 10. Síntese do cenário adversarial
 
 O cenário pode ser resumido da seguinte forma:
 
