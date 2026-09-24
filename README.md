@@ -107,3 +107,29 @@ A preservação dessa propriedade é importante porque a manipulação das infor
 Por exemplo, se vários usuários declararem urgência máxima independentemente da gravidade real de seus problemas, chamados que realmente possuem alta urgência podem competir pelo mesmo recurso com chamados artificialmente classificados como urgentes.
 
 ---
+
+# 5. Ações e capacidades dos atores
+
+## 5.1 Solicitante
+
+O solicitante possui as seguintes capacidades:
+
+- criar um chamado;
+- descrever o problema;
+- informar a urgência percebida;
+- informar o impacto do chamado;
+- atualizar informações do chamado;
+- acompanhar o andamento do atendimento;
+- observar a prioridade atribuída ao chamado.
+
+A decisão estratégica mais importante considerada neste modelo é a **declaração da urgência e impacto**.
+
+Para simplificar o modelo, podem ser consideradas duas estratégias:
+
+```text
+Estratégia 1: declarar a urgência e o impacto de acordo com a situação real
+Estratégia 2: superestimar deliberadamente a urgência e o impacto
+Estratégia 3: superestimar a urgência e o impacto de forma não intencional
+```
+
+A segunda estratégia representa um comportamento oportunista e deliberado, no qual o participante tenta obter uma prioridade maior do que aquela que seria atribuída com base na necessidade real. Já a terceira estratégia representa uma classificação incorreta, porém não intencional, decorrente de uma avaliação imprecisa da urgência ou do impacto do chamado.
