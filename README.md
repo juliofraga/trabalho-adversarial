@@ -245,3 +245,31 @@ O mecanismo de priorização também possui limitações:
 - pode não distinguir corretamente informações verdadeiras das informações declaradas.
 
 ---
+
+# 8. Pressupostos do sistema
+
+O mecanismo de priorização depende de alguns pressupostos para funcionar adequadamente.
+
+## 8.1 Pressuposto 1 — A urgência informada representa razoavelmente a situação real
+
+O sistema pressupõe que o solicitante fornecerá uma informação de urgência e impacto que representem, de maneira razoável, a necessidade real de atendimento.
+
+Esse pressuposto é necessário porque o sistema utiliza a urgência e o impacto como elementos para determinar a prioridade.
+
+### Como esse pressuposto pode falhar?
+
+O solicitante pode superestimar deliberadamente a urgência e/ou o impacto para aumentar a prioridade do próprio chamado.
+
+Exemplo:
+
+```text
+Problema real:
+impacto baixo / urgência baixa
+
+Informação fornecida:
+impacto alto / urgência alta
+```
+
+Se esse comportamento produzir uma vantagem para o solicitante, ele poderá ser repetido em interações futuras.
+
+Isso pode fazer com que chamados com necessidade real menor ocupem posições destinadas a chamados mais urgentes.
