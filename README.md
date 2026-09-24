@@ -204,3 +204,44 @@ Entre essas informações estão:
 - configurações de SLA.
 
 ---
+
+# 7. Custos e restrições das ações
+
+Os participantes não podem tomar decisões de forma ilimitada.
+
+## 7.1 Restrições do solicitante
+
+O solicitante possui restrições como:
+
+- necessidade de fornecer informações mínimas para abertura do chamado;
+- acesso limitado às informações internas da equipe de suporte;
+- necessidade de justificar ou descrever o problema;
+- dependência da capacidade disponível da equipe de suporte.
+
+Além disso, uma eventual superestimação recorrente da urgência e impacto pode reduzir a confiabilidade das informações fornecidas pelo usuário.
+
+## 7.2 Restrições do técnico
+
+O técnico possui restrições como:
+
+- quantidade limitada de tempo;
+- número de chamados simultâneos;
+- necessidade de respeitar prioridades;
+- SLAs estabelecidos;
+- complexidade dos problemas;
+- necessidade de justificar determinadas decisões;
+- informações incompletas sobre o problema relatado.
+
+O técnico não possui capacidade ilimitada para atender todos os chamados simultaneamente. Portanto, a escolha de atender um chamado implica, direta ou indiretamente, postergar outros.
+
+## 7.3 Restrições do sistema
+
+O mecanismo de priorização também possui limitações:
+
+- depende da qualidade das informações fornecidas;
+- depende da configuração da matriz de prioridade;
+- depende da classificação correta de urgência e impacto;
+- possui informações limitadas sobre a situação real;
+- pode não distinguir corretamente informações verdadeiras das informações declaradas.
+
+---
