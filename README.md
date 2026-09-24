@@ -133,3 +133,26 @@ Estratégia 3: superestimar a urgência e o impacto de forma não intencional
 ```
 
 A segunda estratégia representa um comportamento oportunista e deliberado, no qual o participante tenta obter uma prioridade maior do que aquela que seria atribuída com base na necessidade real. Já a terceira estratégia representa uma classificação incorreta, porém não intencional, decorrente de uma avaliação imprecisa da urgência ou do impacto do chamado.
+
+## 5.2 Técnico de suporte
+
+O técnico possui as seguintes capacidades:
+
+- visualizar chamados aos quais possui acesso;
+- analisar a descrição do problema;
+- avaliar a urgência e o impacto do chamado;
+- alterar ou confirmar informações de classificação;
+- atender o chamado;
+- atualizar o estado do chamado;
+- resolver o problema.
+
+A principal decisão estratégica considerada é a **avaliação da urgência e do impacto**.
+
+Para simplificar o modelo, podem ser consideradas:
+
+```text
+Estratégia 1: avaliar a urgência e o impacto de acordo com a situação observada
+Estratégia 2: superestimar ou subestimar a urgência e o impacto
+```
+
+---
