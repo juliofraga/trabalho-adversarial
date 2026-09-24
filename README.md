@@ -45,3 +45,53 @@ Assim, a classificação de um chamado não depende exclusivamente das caracter�
 O caráter adversarial não pressupõe necessariamente que os participantes sejam mal-intencionados. Um participante pode simplesmente escolher uma estratégia que maximize seu próprio objetivo, mesmo que essa decisão produza consequências negativas para outros participantes ou para a distribuição dos recursos de atendimento.
 
 ---
+
+# 2. Principais atores
+
+Os principais atores considerados no modelo são:
+
+1. **Solicitante** — usuário que registra o chamado e informa a urgência percebida.
+2. **Técnico de suporte** — profissional responsável por analisar o chamado e avaliar seu impacto.
+3. **Sistema GLPI** — mecanismo que processa as informações fornecidas e determina a prioridade de acordo com as regras configuradas.
+
+Embora o sistema execute decisões automaticamente, ele não será tratado como um agente estratégico no mesmo sentido que o solicitante e o técnico. Ele representa o mecanismo responsável por transformar as decisões dos participantes em um resultado observável.
+
+---
+
+# 3. Objetivos dos atores
+
+## 3.1 Solicitante
+
+O principal objetivo do solicitante é obter a resolução do seu problema no menor tempo possível.
+
+Entre seus objetivos secundários estão:
+
+- obter uma prioridade compatível com a importância percebida do problema;
+- reduzir o tempo de espera pelo atendimento;
+- minimizar o impacto da indisponibilidade do serviço utilizado;
+- receber atendimento dentro do SLA aplicável.
+
+Do ponto de vista estratégico, o solicitante pode ter incentivo para declarar uma urgência maior do que a urgência efetivamente observada, caso perceba que uma maior urgência aumenta a prioridade do chamado.
+
+## 3.2 Técnico de suporte
+
+O principal objetivo do técnico é resolver os chamados de forma adequada, respeitando a prioridade e os níveis de serviço estabelecidos.
+
+Entre seus objetivos estão:
+
+- avaliar corretamente o impacto de cada chamado;
+- atender os chamados prioritários;
+- cumprir os SLAs;
+- utilizar os recursos de atendimento de maneira eficiente;
+- reduzir o tempo de resolução;
+- evitar que chamados de alto impacto permaneçam sem atendimento.
+
+O técnico também está sujeito a restrições de capacidade, como quantidade de chamados simultâneos, tempo disponível e complexidade dos problemas.
+
+## 3.3 Sistema
+
+O objetivo do mecanismo de priorização é produzir uma ordem de atendimento coerente com a urgência e o impacto dos chamados.
+
+O sistema deve evitar que decisões individuais provoquem uma distribuição inadequada dos recursos de suporte, fazendo com que chamados menos relevantes sejam atendidos antes de problemas que possuem maior impacto sobre a organização.
+
+---
