@@ -95,3 +95,15 @@ O objetivo do mecanismo de priorização é produzir uma ordem de atendimento co
 O sistema deve evitar que decisões individuais provoquem uma distribuição inadequada dos recursos de suporte, fazendo com que chamados menos relevantes sejam atendidos antes de problemas que possuem maior impacto sobre a organização.
 
 ---
+
+# 4. Ativo ou propriedade a ser preservado
+
+O principal ativo a ser preservado é a **distribuição justa e adequada do recurso de atendimento de suporte técnico**.
+
+A propriedade desejada é que a prioridade dos chamados represente, de maneira real e verdadeira, a necessidade de atendimento, considerando fatores como urgência e impacto do problema.
+
+A preservação dessa propriedade é importante porque a manipulação das informações utilizadas para determinar a prioridade pode provocar uma distribuição inadequada dos recursos.
+
+Por exemplo, se vários usuários declararem urgência máxima independentemente da gravidade real de seus problemas, chamados que realmente possuem alta urgência podem competir pelo mesmo recurso com chamados artificialmente classificados como urgentes.
+
+---
