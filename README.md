@@ -273,3 +273,34 @@ impacto alto / urgência alta
 Se esse comportamento produzir uma vantagem para o solicitante, ele poderá ser repetido em interações futuras.
 
 Isso pode fazer com que chamados com necessidade real menor ocupem posições destinadas a chamados mais urgentes.
+
+## 8.2 Pressuposto 2 — O impacto informado pelo solicitante representa adequadamente a situação
+
+O sistema pressupõe que o impacto informado pelo solicitante representa de maneira adequada a quantidade de usuários, serviços ou processos afetados pelo problema.
+
+### Como esse pressuposto pode falhar?
+
+O solicitante pode possuir informações incompletas sobre os efeitos do problema ou interpretar de maneira incorreta sua abrangência, informando um impacto maior ou menor do que o impacto real.
+
+Além disso, pode existir comportamento estratégico. Um solicitante que tenha interesse em obter atendimento mais rápido pode deliberadamente informar um impacto superior ao real, aumentando a prioridade resultante do chamado.
+
+Consequentemente, chamados com características semelhantes podem receber prioridades diferentes em função da forma como seus solicitantes informam o impacto.
+
+## 8.3 Pressuposto 3 — A prioridade calculada representa adequadamente a necessidade de atendimento
+
+O sistema pressupõe que a combinação entre urgência e impacto é suficiente para representar a prioridade de um chamado.
+
+### Como esse pressuposto pode falhar?
+
+A realidade de um chamado pode possuir fatores que não são representados adequadamente apenas pela urgência e pelo impacto.
+
+Por exemplo:
+
+- um problema pode afetar um serviço crítico;
+- existir um prazo regulatório;
+- existir dependência de outro serviço;
+- um problema aparentemente pequeno pode bloquear um processo essencial.
+
+Nesse caso, a prioridade calculada pode não representar completamente a necessidade real de atendimento.
+
+---
