@@ -419,7 +419,7 @@ Ordem: (Honesto, Aceitar) = 3 > (Honesto, Revisar) = 2 > (Inflar, Revisar) = 1 >
 
 Os dois resultados em que o Solicitante é honesto recebem o mesmo payoff para ele, pois, do seu ponto de vista, a prioridade obtida é a mesma com ou sem revisão.
 
-## 11.5 Neliores Respostas 
+## 11.5 Melhores Respostas 
 
 A melhor resposta de um jogador é a ação que lhe proporciona o maior payoff, considerando fixa a ação do outro jogador.
 
@@ -442,7 +442,51 @@ Na matriz abaixo, os payoffs correspondentes a melhores respostas estão destaca
 
 A melhor decisão de cada jogador depende da decisão do outro. O Solicitante só tem incentivo para inflar quando espera que o Técnico aceite a classificação; o Técnico só tem incentivo para revisar quando espera que o Solicitante infle.
 
+## 11.6 Estrategia Dominante 
 
+Uma estratégia  é dominante quando é a melhor resposta de um jogador independentemente  da ação escolhida pelo outro.
+
+- **solicitante :** não possui estratégia dominante.  Inlfar é a melhor resposta quando o Técnico aceita, mas declarar honestamente é melhor resposta quando o técnico revisa.
+- **Técnico:** não possui estratégia dominante.  Aceitar é a melhor resposta quando o solicitante é honesto, mas Revisar é a melhor resposta quando o solicitante infla. 
+
+postanto, **não existe etratégia dominante para nenhum dos jogadores**. Nenhum deles pode escolhar  sua ação sem considerar o comportamento esperado do outro.
+
+## 11.7 Resultado em que nenhum jogador melhora mudando sozinho
+
+Um resultado no qual nenhum jogador consegue melhorar seu payoff alterando sozinho sua ação corresponde a um **equilíbrio de Nash**. Na matriz, ele seria identificado por uma célula em que os dois payoffs estivessem destacados como melhores respostas.
+
+Verificando cada resultado:
+
+| Resultado | Desvio unilateral vantajoso | É equilíbrio? |
+| :--- | :--- | :--- |
+| (Honesto, Aceitar) | O Solicitante muda para Inflar e passa de 2 para 3. | Não |
+| (Inflar, Aceitar) | O Técnico muda para Revisar e passa de 0 para 1. | Não |
+| (Inflar, Revisar) | O Solicitante muda para Honesto e passa de 0 para 2. | Não |
+| (Honesto, Revisar) | O Técnico muda para Aceitar e passa de 2 para 3. | Não |
+
+Assim, **não existe equilíbrio de Nash em estratégias puras**. Em todos os resultados, algum jogador possui incentivo para mudar de ação, o que produz um ciclo:
+
+```text
+(Honesto, Aceitar)
+        │
+        │ o Solicitante percebe que pode inflar sem ser verificado
+        ▼
+(Inflar, Aceitar)
+        │
+        │ o Técnico passa a revisar os chamados
+        ▼
+(Inflar, Revisar)
+        │
+        │ o Solicitante volta a declarar honestamente
+        ▼
+(Honesto, Revisar)
+        │
+        │ o Técnico deixa de revisar, pois a revisão não traz ganho
+        ▼
+(Honesto, Aceitar) ...
+```
+
+Esse resultado é compatível com o enunciado, que não exige a existência de equilíbrio. A ausência de equilíbrio em estratégias puras evidencia justamente que a melhor decisão de cada participante depende da escolha do outro.
 
 
 
