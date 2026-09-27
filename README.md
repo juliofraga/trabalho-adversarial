@@ -391,6 +391,7 @@ Cada célula apresenta um par(**payoff do Solicitante**, **payoff do Técnico**)
 **Solicitante (jogador das Linhas)**
 
 -**A1 - Declarar Honestamente :** O solicitante informa a urgência e o impacto de acordo com a situação real do problema. Corresponde a Estratégia 1 da seção 5.1.
+
 -**A2 - inflar a classificação:** O solicitante informa, de forma deliberada, urgẽncia e/ou impacto superiores aos reais, com o Objetivo de obter uma prioridade maior. Corresponde á Estratégia 2 da seção 5.1.1 
 
 
