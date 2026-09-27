@@ -488,8 +488,21 @@ Assim, **não existe equilíbrio de Nash em estratégias puras**. Em todos os re
 
 Esse resultado é compatível com o enunciado, que não exige a existência de equilíbrio. A ausência de equilíbrio em estratégias puras evidencia justamente que a melhor decisão de cada participante depende da escolha do outro.
 
+## 11.8 Avaliação do Resultado para o Sistema e para os Usuários legiimos 
 
+O resultado mais desejável para o sistema é **(Honesto, Aceitar)**. Nele, a prioridade representa a necessidade real de antendimento e o técnico não consome tempo com verificações descnecesárioas , preservandoo ativo definido naseção 4.
 
+Entretanto, esse resultado **não é estável**. Quando o Técnico aceita as classificações sem verificação, o Solicitante tem incentivo para inflar a urgencia e o impacto. Assim , o presuposto 8.1, de que a urgência informada representa razoavelmente a situação real, não se sustenta por si só : ele depende da existência de uma possibilidade real de revisão.
+
+O resultado do "jogo" não é bom para o sistema nem para os usuários legítimos:
+
+-**Para o sistema :** sempre que o técnico aceitar as classificações sem verficação, abre-se  espaço para que ahamados inflados ocupem possições indevidas na fila, comprometendo a distribuição  adequada do recurso de atendimento. 
+
+-**Para os Usuários Legitimos:** eles são prejudicados de duas formas. Primeiro , chamados inflados podem ser atendidos antes dos seus, mesmo possuindo menor necessidade real. Segundo, o tempo que o técnico dedica á revisão de chamados corretamente classificados reduz a capacidade disponível para atendimento.
+
+**Para o Téncico:**a revisão protege a fila, mas consome capacidade,  uma das principais restrições descritas na seção 7.2. 
+
+Conclui-se que, em uma interação isolada, a honestidade do Solicitante e a confiança do Técnico não se sustentam simultaneamente. A qualidade da priorização depende de mecanismos que tornem a revisão crível e que reduzam o ganho obtido com a manipulação. Esse resultado motiva a análise do modelo dinâmico, no qual o histórico e a credibilidade do Solicitante podem alterar os incentivos dos participantes ao longo das interações.
 
 
 
