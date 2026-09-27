@@ -394,6 +394,57 @@ Cada célula apresenta um par(**payoff do Solicitante**, **payoff do Técnico**)
 
 -**A2 - inflar a classificação:** O solicitante informa, de forma deliberada, urgẽncia e/ou impacto superiores aos reais, com o Objetivo de obter uma prioridade maior. Corresponde á Estratégia 2 da seção 5.1.1 
 
+## 11.4 Justificativas dos Payoffs 
+
+**Preferẽncias do Solicitante** 
+
+O Solicitante prefere, em primeiro lugar , o bter uma prioridade superior á que seu problema justificaria, sem sofrer conseguẽncias. em segundo lugar , prefere receber a prioridade correspondente à  necessidade real. O pior resultado é ter a classíficação infleda descoberta, pois a vantagem pretendida e compromote a confiabildade das informações que fornece ( seção 7.1). 
+
+Ordem : (inflar, Aceitar) = 3 > (Honesto, Aceitar ) = (honesto, Revisar) = 2 > ( inflar, revisar) = o. 
+
+**Preferências do Técnico**
+
+O Técnico prefere uma fila que represente corretamente a necessidade de atendimento e que não exija esforço adicional de verificação, dada a sua restrição de tempo (seção 7.2). O pior resultado é atender chamados fora da ordem adequada, prejudicando chamados realmente prioritários e o cumprimento dos SLAs (seções 3.2 e 4).
+
+Ordem: (Honesto, Aceitar) = 3 > (Honesto, Revisar) = 2 > (Inflar, Revisar) = 1 > (Inflar, Aceitar) = 0.
+
+**Justificativa por resultados** 
+
+| Resultado | Payoff do Solicitante | Payoff do Técnico |
+| :--- | :--- | :--- |
+| **(Honesto, Aceitar)** | **2** — recebe a prioridade compatível com a necessidade real do problema. | **3** — a fila representa a necessidade real e nenhum tempo é gasto com verificação. É o melhor resultado para o Técnico. |
+| **(Honesto, Revisar)** | **2** — a revisão confirma a classificação, e o Solicitante recebe a mesma prioridade que receberia se o Técnico aceitasse. | **2** — a fila permanece correta, mas o Técnico consumiu tempo verificando um chamado que já estava corretamente classificado. |
+| **(Inflar, Aceitar)** | **3** — obtém prioridade superior à necessária e passa à frente de outros chamados. É o melhor resultado para o Solicitante. | **0** — o recurso de atendimento é alocado de forma inadequada, e chamados de maior necessidade real podem ser atrasados ou ter o SLA descumprido. É o pior resultado para o Técnico e para o ativo da seção 4. |
+| **(Inflar, Revisar)** | **0** — a manipulação é identificada, a prioridade é corrigida e o Solicitante perde credibilidade. É o pior resultado para o Solicitante. | **1** — a fila é corrigida, mas à custa do tempo de revisão. É melhor do que aceitar um chamado inflado, porém pior do que lidar com chamados honestos. |
+
+Os dois resultados em que o Solicitante é honesto recebem o mesmo payoff para ele, pois, do seu ponto de vista, a prioridade obtida é a mesma com ou sem revisão.
+
+## 11.5 Neliores Respostas 
+
+A melhor resposta de um jogador é a ação que lhe proporciona o maior payoff, considerando fixa a ação do outro jogador.
+
+**Melhores respostas do Solicitante**
+
+- Se o Técnico **aceita** a classificação: Honesto = 2 e Inflar = 3. A melhor resposta é **Inflar**.
+- Se o Técnico **revisa** o chamado: Honesto = 2 e Inflar = 0. A melhor resposta é **Declarar honestamente**.
+
+**Melhores respostas do Técnico**
+
+- Se o Solicitante **declara honestamente**: Aceitar = 3 e Revisar = 2. A melhor resposta é **Aceitar**.
+- Se o Solicitante **infla** a classificação: Aceitar = 0 e Revisar = 1. A melhor resposta é **Revisar**.
+
+Na matriz abaixo, os payoffs correspondentes a melhores respostas estão destacados em negrito:
+
+| Solicitante \ Técnico | B1: Aceitar | B2: Revisar |
+| :--- | :---: | :---: |
+| **A1: Honesto** | (2, **3**) | (**2**, 2) |
+| **A2: Inflar** | (**3**, 0) | (0, **1**) |
+
+A melhor decisão de cada jogador depende da decisão do outro. O Solicitante só tem incentivo para inflar quando espera que o Técnico aceite a classificação; o Técnico só tem incentivo para revisar quando espera que o Solicitante infle.
+
+
+
+
 
 
 
