@@ -382,6 +382,7 @@ Os payos representam a **ordem de preferências** de cada jogador sobre os resul
 
 Cada célula apresenta um par(**payoff do Solicitante**, **payoff do Técnico**).
 | Solicitante \  Técnico | B1: Aceitar a classificação | B2: Revisar o chamado | 
+|:--- | :---: | :---: |
 |**A1 : declarar honestamente** | (2,3) | (2,2) | 
 |**A2 : Inflar a classificação** | (3,0) |(0,1) |
 
