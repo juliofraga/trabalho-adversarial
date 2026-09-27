@@ -362,3 +362,21 @@ O caráter adversarial surge porque o resultado da interação depende das decis
 O solicitante pode ter incentivo para aumentar a urgência declarada para obter atendimento mais rápido, enquanto o técnico precisa distribuir sua capacidade de atendimento entre diferentes chamados e determinar o impacto de cada problema.
 
 Dessa forma, as decisões tomadas em uma rodada podem alterar o comportamento dos participantes nas rodadas seguintes, permitindo analisar o sistema tanto como um **modelo estratégico estático**, considerando as decisões em uma interação isolada, quanto como um **modelo estratégico dinâmico**, considerando a adaptação dos participantes ao observar os resultados das interações anteriores.
+
+
+# 11. Modelo Estratégico Estático
+
+## 11.1 Modelagem de Decisão Central : 
+
+A decisão central escolhida para o modelo estático é a classificação do chamado, considerada a partir da interação entre o Solicitante e o Técnico de suporte.
+
+O Solicitante decide como declarar a urgência e o impacto do chamado. O Técnico decide se aceita a classificação declarada ou se revisa o chamado antes de atendê-lo. O Sistema GLPI não é tratado como jogador, pois apenas transforma a classificação final em prioridade, conforme definido na seção 2 do item 3.1.
+
+As decisões são consideradas simultâneas: o Técnico define sua conduta sem saber, previamente, se aquele Solicitante declarou a classificação de forma honesta ou inflada. Essa hipótese é coerente com a seção 6, segundo a qual o Técnico observa apenas a urgência e o impacto declarados, e não a situação real do problema.
+
+A Estratégia 3 do Solicitante descrita na seção 5.1 (superestimação não intencional) não é incluída como ação do jogo, pois não corresponde a uma escolha deliberada. Ela é tratada como uma fonte de incerteza, mais adequada ao modelo dinâmico.
+
+
+
+
+
