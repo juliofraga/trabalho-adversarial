@@ -1,3 +1,17 @@
+# Trabalho Análise de um Sistema Adversarial — Grupo 4
+
+### Integrantes
+
+| Nome |
+|---|
+| Adriano Gebert Gomes |
+| André Nunes Monteiro |
+| Júlio Eduardo da Silva Fraga |
+| Mariana Kegler Lorentz |
+| Nilton Jansenn Lopes Ribeiro Freitas |
+
+---
+
 # 1. Descrição do sistema adversarial
 
 ## 1.1 Sistema analisado
