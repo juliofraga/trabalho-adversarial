@@ -512,5 +512,46 @@ Conclui-se que, em uma interação isolada, a honestidade do Solicitante e a con
 | 2 | O solicitante repete a estratégia de inflar a urgência e o impacto em um novo chamado de baixa criticidade. | O técnico revisa o chamado, validando a real necessidade e reclassifica a prioridade par ao nível correto. | O solicitante percebe a perda de privilégio e a demora no atendimento do chamado. O técnico contata a reincidência da manipulação pelo histórico. | O solicitante sofre penalidade de credibilidade e opta por declarar honestamente da rodada seguinte. O técnico registra o perfil do solicitante. |
 | 3 | Com o perfil marcado no histórico de reclassificações anteriores, o solicitante opta por declarar a urgência e o impacto corretamente. | O sistema e o técnico processam o chamado sem revisão adicional, aceitando a prioridade informada e liberando recursos. | O solicitante recebe um atendimento ágil e previsível. O técnico valida que a reputação restabeleceu eficiência da fila. | O sistema consolida uma política baseada em histórico de confiabilidade (reputação), restringindo auditorias apenas a perfis reincidentes. |
 
+## 12.1 Diagrama do Ciclo Adaptativo
+
+```text
+             ┌───────────────────────┐
+             │ Ação do Participante  │ Declaração honesta ou inflada
+             └─────────┬─────────────┘
+                       │
+                       │ 
+                       ▼
+             ┌───────────────────────┐
+             │ Resposta do Técnico   │ Aceitação automática ou revisão críitica
+             └─────────┬─────────────┘                       
+                       │
+                       │ 
+                       ▼
+             ┌───────────────────────┐
+             │     Observalidade     │ Feedback de tempo, histórico e penalidades
+             └─────────┬─────────────┘                       
+                       │
+                       │ 
+                       ▼             
+             ┌───────────────────────┐
+             │ Adaptação Estratégica │ Ajuste do comportamento para a próxima rodada
+             └───────────────────────┘                                 
+```
+
+## 12.2 Quem observa quem?
+O solicitante observa o tempo de atendimento e o status do chamado atribuído pelo sistema. O técnico observa o histórico de chamados anteriores, a consistência das justificativas e a reincidência de desvios por parte do usuário. 
+
+## 12.3 O que cada lado consegue mudar?
+O solicitante pode alterar sua estratégia de declaração (alternando entre honestidade e inflação artificial). O técnico consegue alterar o rigor da defesa, podendo instituir auditorias sistemáticas, restrições de submissão ou checagem manual baseada em perfil de risco.
+
+## 12.4 O que dispara uma adaptação?
+No lado do solicitante, o gatilho é o custo de ser pego na manipulação (atrasos e perda de credibilidade). No lado do técnico, o gatilho é a saturação da fila de atendimento e o descumprimento sistemático dos SLAs gerados por chamados falsamente priorizados.
+
+## 12.5 Qual é o custo da adaptação para cada lado? 
+Para o solicitante, o custo é o risco de ter seu chamado rebaixado, perdendo tempo de prioridade. Para o técnico, o custo é o esforço operacional e o tempo consumido na triagem e revisão manual de chamados, reduzindo a capacidade de resolução de problemas reais.
+
+## 12.6 Em que ponto pode surgir uma corrida armamentista? 
+A corrida armamentista surge quando o defensor implementa barreiras automatizadas rígidas no GLPI (como exigência de aprovação gerencial ou laudos para qualquer nível de urgência alta) e, em resposta, o solicitante passa a adotar engenharia social avançada, inserindo descrições elaboradas e técnicas para burlar o filtro automatizado sem levantar suspeitas imediatas.
+
 
 
