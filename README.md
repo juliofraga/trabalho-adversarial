@@ -378,9 +378,9 @@ A Estratégia 3 do Solicitante descrita na seção 5.1 (superestimação não in
 
 ## 11.2 Matriz de payoffs 
 
-Os payos representam a **ordem de preferências** de cada jogador sobre os resultados possíveis, sendo 2 o resultado mais preferido  e o 0 o menos preferido. Os valores são ordinais: indicam apenas a posição de cada resultado na preferẽncia do jogador e não devem ser comparados enre os jogadores. 
+Os payoffs representam a **ordem de preferências** de cada jogador sobre os resultados possíveis, sendo 2 o resultado mais preferido  e o 0 o menos preferido. Os valores são ordinais: indicam apenas a posição de cada resultado na preferência do jogador e não devem ser comparados enre os jogadores. 
 
-Cada célula apresenta um par(**payoff do Solicitante**, **payoff do Técnico**).
+Cada célula apresenta um par (**payoff do Solicitante**, **payoff do Técnico**).
 | Solicitante \  Técnico | B1: Aceitar a classificação | B2: Revisar o chamado | 
 |:--- | :---: | :---: |
 |**A1 : declarar honestamente** | (2,3) | (2,2) | 
@@ -396,11 +396,11 @@ Cada célula apresenta um par(**payoff do Solicitante**, **payoff do Técnico**)
 
 ## 11.4 Justificativas dos Payoffs 
 
-**Preferẽncias do Solicitante** 
+**Preferências do Solicitante** 
 
-O Solicitante prefere, em primeiro lugar , o bter uma prioridade superior á que seu problema justificaria, sem sofrer conseguẽncias. em segundo lugar , prefere receber a prioridade correspondente à  necessidade real. O pior resultado é ter a classíficação infleda descoberta, pois a vantagem pretendida e compromote a confiabildade das informações que fornece ( seção 7.1). 
+O Solicitante prefere, em primeiro lugar, obter uma prioridade superior a que seu problema justificaria, sem sofrer consequências. Em segundo lugar, prefere receber a prioridade correspondente à necessidade real. O pior resultado é ter a classíficação inflada descoberta, pois a vantagem pretendida e compromote a confiabildade das informações que fornece ( seção 7.1). 
 
-Ordem : (inflar, Aceitar) = 3 > (Honesto, Aceitar ) = (honesto, Revisar) = 2 > ( inflar, revisar) = o. 
+Ordem : (inflar, Aceitar) = 3 > (Honesto, Aceitar ) = (honesto, Revisar) = 2 > ( inflar, revisar) = 0. 
 
 **Preferências do Técnico**
 
@@ -446,7 +446,7 @@ A melhor decisão de cada jogador depende da decisão do outro. O Solicitante s�
 
 Uma estratégia  é dominante quando é a melhor resposta de um jogador independentemente  da ação escolhida pelo outro.
 
-- **solicitante :** não possui estratégia dominante.  Inlfar é a melhor resposta quando o Técnico aceita, mas declarar honestamente é melhor resposta quando o técnico revisa.
+- **solicitante :** não possui estratégia dominante.  Inflar é a melhor resposta quando o Técnico aceita, mas declarar honestamente é melhor resposta quando o técnico revisa.
 - **Técnico:** não possui estratégia dominante.  Aceitar é a melhor resposta quando o solicitante é honesto, mas Revisar é a melhor resposta quando o solicitante infla. 
 
 postanto, **não existe etratégia dominante para nenhum dos jogadores**. Nenhum deles pode escolhar  sua ação sem considerar o comportamento esperado do outro.
@@ -488,24 +488,28 @@ Assim, **não existe equilíbrio de Nash em estratégias puras**. Em todos os re
 
 Esse resultado é compatível com o enunciado, que não exige a existência de equilíbrio. A ausência de equilíbrio em estratégias puras evidencia justamente que a melhor decisão de cada participante depende da escolha do outro.
 
-## 11.8 Avaliação do Resultado para o Sistema e para os Usuários legiimos 
+## 11.8 Avaliação do Resultado para o Sistema e para os Usuários legítimos 
 
-O resultado mais desejável para o sistema é **(Honesto, Aceitar)**. Nele, a prioridade representa a necessidade real de antendimento e o técnico não consome tempo com verificações descnecesárioas , preservandoo ativo definido naseção 4.
+O resultado mais desejável para o sistema é **(Honesto, Aceitar)**. Nele, a prioridade representa a necessidade real de atendimento e o técnico não consome tempo com verificações desnecessários, preservando o ativo definido na seção 4.
 
-Entretanto, esse resultado **não é estável**. Quando o Técnico aceita as classificações sem verificação, o Solicitante tem incentivo para inflar a urgencia e o impacto. Assim , o presuposto 8.1, de que a urgência informada representa razoavelmente a situação real, não se sustenta por si só : ele depende da existência de uma possibilidade real de revisão.
+Entretanto, esse resultado **não é estável**. Quando o Técnico aceita as classificações sem verificação, o Solicitante tem incentivo para inflar a urgência e o impacto. Assim, o presuposto 8.1, de que a urgência informada representa razoavelmente a situação real, não se sustenta por si só: ele depende da existência de uma possibilidade real de revisão.
 
 O resultado do "jogo" não é bom para o sistema nem para os usuários legítimos:
 
--**Para o sistema :** sempre que o técnico aceitar as classificações sem verficação, abre-se  espaço para que ahamados inflados ocupem possições indevidas na fila, comprometendo a distribuição  adequada do recurso de atendimento. 
+-**Para o sistema :** sempre que o técnico aceitar as classificações sem verficação, abre-se espaço para que chamados inflados ocupem possições indevidas na fila, comprometendo a distribuição  adequada do recurso de atendimento. 
 
--**Para os Usuários Legitimos:** eles são prejudicados de duas formas. Primeiro , chamados inflados podem ser atendidos antes dos seus, mesmo possuindo menor necessidade real. Segundo, o tempo que o técnico dedica á revisão de chamados corretamente classificados reduz a capacidade disponível para atendimento.
+-**Para os Usuários Legítimos:** eles são prejudicados de duas formas. Primeiro, chamados inflados podem ser atendidos antes dos seus, mesmo possuindo menor necessidade real. Segundo, o tempo que o técnico dedica á revisão de chamados corretamente classificados reduz a capacidade disponível para atendimento.
 
-**Para o Téncico:**a revisão protege a fila, mas consome capacidade,  uma das principais restrições descritas na seção 7.2. 
+**Para o Téncico:**a revisão protege a fila, mas consome capacidade, uma das principais restrições descritas na seção 7.2. 
 
 Conclui-se que, em uma interação isolada, a honestidade do Solicitante e a confiança do Técnico não se sustentam simultaneamente. A qualidade da priorização depende de mecanismos que tornem a revisão crível e que reduzam o ganho obtido com a manipulação. Esse resultado motiva a análise do modelo dinâmico, no qual o histórico e a credibilidade do Solicitante podem alterar os incentivos dos participantes ao longo das interações.
 
+# 12 Modelo estratégico dinâmico
 
-
+| Rodada | Ação do participante | Resposta do sistema ou defensor | O que se torna observável | Adaptação para a rodada seguinte |
+| 1 | O solicitante abre um chamado rotineiro e decide inflar a urgência e o impacto para obter prioridade máxima. | O sistema processa os dados e atribui prioridade alta de forma automatizada, sem intervenção imediata do técnico. | O solicitante observa que a manipulação da urgência e do impacto garantiu atendimento imediato, enquanto o técnico percebe uma distorção na fila de atendimentos. | O solicitante conclui que inflar compensa. O técnico passa a desconfiar das métricas informadas e decide checar as próximas demandas do solicitante.  |
+| 2 | O solicitante repete a estratégia de inflar a urgência e o impacto em um novo chamado de baixa criticidade. | O técnico revisa o chamado, validando a real necessidade e reclassifica a prioridade par ao nível correto. | O solicitante percebe a perda de privilégio e a demora no atendimento do chamado. O técnico contata a reincidência da manipulação pelo histórico. | O solicitante sofre penalidade de credibilidade e opta por declarar honestamente da rodada seguinte. O técnico registra o perfil do solicitante. |
+| 3 | Com o perfil marcado no histórico de reclassificações anteriores, o solicitante opta por declarar a urgência e o impacto corretamente. | O sistema e o técnico processam o chamado sem revisão adicional, aceitando a prioridade informada e liberando recursos. | O solicitante recebe um atendimento ágil e previsível. O técnico valida que a reputação restabeleceu eficiência da fila. | O sistema consolida uma política baseada em histórico de confiabilidade (reputação), restringindo auditorias apenas a perfis reincidentes. |
 
 
 
