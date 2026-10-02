@@ -567,5 +567,78 @@ Para o solicitante, o custo é o risco de ter seu chamado rebaixado, perdendo te
 ## 12.6 Em que ponto pode surgir uma corrida armamentista? 
 A corrida armamentista surge quando o defensor implementa barreiras automatizadas rígidas no GLPI (como exigência de aprovação gerencial ou laudos para qualquer nível de urgência alta) e, em resposta, o solicitante passa a adotar engenharia social avançada, inserindo descrições elaboradas e técnicas para burlar o filtro automatizado sem levantar suspeitas imediatas.
 
+# 13 Ameaças
 
+| ID	| Cenário de ameaça | Ponto de exploração	| Pressuposto ou fraqueza |	Ativo afetado	| Probabilidade |	Impacto | Risco |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| A1 | Superestimação da urgência. O usuário pode informar uma urgência superior para o problema por meio do campo de urgência do chamado.	| Campo de urgência do chamado. |	A informação fornecida representa de fato a urgência da ocorrência. | Ordem dos chamados na fila. | 3 | 2 | 6		
+| A2 | Manipular as informações para influenciar a prioridade. O usuário pode alterar ou adicionar mais informações ao chamado para elevar a prioridade. | 	Descrição e atualização das informações de urgência. | As informações fornecidas são suficientes para descrever o problema .| Classificação inadequada de prioridade. | 3 | 2 | 6						
+| A3 | Repudiar a informação fornecida. O usuário pode negar posteriormente que informou prioridade urgente. | Ausência de rastreabilidade/histórico do chamado | Mecanismos de registros de alterações insuficiente | Rastreabilidade do processo de atendimento. | 2 | 2 | 4 |					
 
+# 13.1 Diagrama de ataque:
+
+```text
+                         SUPERFÍCIE DE ATAQUE
+┌─────────────────────────────────────────────────────────────┐
+│                                                             │
+│  USUÁRIO                                                    │
+│     │                                                       │
+│     │ cria chamado                                          │
+│     ▼                                                       │
+│  ┌──────────────┐                                           │
+│  │    CHAMADO   │                                           │
+│  └──────┬───────┘                                           │
+│         │                                                   │
+│         │ informa urgência                                  │
+│         ▼                                                   │
+│  ┌──────────────┐       P1                                  │
+│  │   URGÊNCIA   │◄─────────────── A1: superestimação        │
+│  └──────┬───────┘                                           │
+│         │                                                   │
+│         │                     TÉCNICO                       │
+│         │                        │                          │
+│         │                        │ avalia impacto           │
+│         │                        ▼                          │
+│         │                 ┌──────────────┐                  │
+│         │                 │    IMPACTO   │◄── P2            │
+│         │                 └──────┬───────┘                  │
+│         │                        │                          │
+│         └──────────┬─────────────┘                          │
+│                    ▼                                        │
+│             ┌───────────────┐                               │
+│             │ REGRA DE      │                               │
+│             │ PRIORIZAÇÃO   │◄── P3: exploração da regra    │
+│             └───────┬───────┘                               │
+│                     │                                       │
+│                     ▼                                       │
+│             ┌───────────────┐                               │
+│             │   PRIORIDADE  │                               │
+│             └───────┬───────┘                               │
+│                     │                                       │
+│                     ▼                                       │
+│             ORDEM DE ATENDIMENTO                            │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+# 13.2 Ameaça mais importante: A1 - Superestimação da urgência
+## 13.2.1 Como o sistema poderia responder? 
+O sistema poderia detectar padrões anormais de urgência, tais como: 
+Um usuário que frequentemente informa urgência máxima em seus chamados;
+um grande número de chamados classificados com urgência máxima. 
+Alterações repetidas da urgência;
+Divergência frequente entre urgência informada e avaliação posterior do técnico.
+
+## 13.2.2 Que informação essa resposta revelaria?
+Que as alterações de urgência estão sendo monitoradas, que alterações frequentes podem ser detectadas.
+
+## 13.2.3 Como o adversário poderia se adaptar na rodada seguinte?
+O usuário pode passar a alternar a urgência. Pode também fornecer na descrição do problema, argumentações para tentar influenciar a avaliação.
+
+## 13.2.4 vQuais efeitos colaterais poderiam atingir usuários legítimos?
+Se a defesa for muito rígida, pode influenciar aqueles que realmente tem urgência no atendimento e o usuário pode ter um atraso no atendimento. Agregar muitas barreiras também pode tornar a alteração da urgência complexa. Ou seja, o mecanismo de defesa precisa reduzir a manipulação sem impedir que usuários legítimos comuniquem situações realmente urgentes.
+
+## 13.2.5 Qual risco continuaria existindo após a resposta?
+O risco de informações subjetivas influenciarem a priorização.
+
+## 13.2.6 O que o sistema precisa continuar preservando apesar das adaptações?
+Apesar das adaptações do adversário, o sistema deve continuar preservando a integridade do processo de priorização, a justiça na distribuição dos recursos de atendimento, a rastreabilidade das alterações realizadas e a disponibilidade e usabilidade do sistema para usuários legítimos.
