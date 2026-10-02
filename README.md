@@ -634,7 +634,7 @@ Que as alterações de urgência estão sendo monitoradas, que alterações freq
 ## 13.2.3 Como o adversário poderia se adaptar na rodada seguinte?
 O usuário pode passar a alternar a urgência. Pode também fornecer na descrição do problema, argumentações para tentar influenciar a avaliação.
 
-## 13.2.4 vQuais efeitos colaterais poderiam atingir usuários legítimos?
+## 13.2.4 Quais efeitos colaterais poderiam atingir usuários legítimos?
 Se a defesa for muito rígida, pode influenciar aqueles que realmente tem urgência no atendimento e o usuário pode ter um atraso no atendimento. Agregar muitas barreiras também pode tornar a alteração da urgência complexa. Ou seja, o mecanismo de defesa precisa reduzir a manipulação sem impedir que usuários legítimos comuniquem situações realmente urgentes.
 
 ## 13.2.5 Qual risco continuaria existindo após a resposta?
