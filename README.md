@@ -10,6 +10,7 @@
 | Mariana Kegler Lorentz |
 | Nilton Jansenn Lopes Ribeiro Freitas |
 
+Apresentação: https://docs.google.com/presentation/d/1fxto918xsuBtVlP9riYURDzHwWoi5pjF/edit?usp=sharing&ouid=108593861321601844373&rtpof=true&sd=true
 ---
 
 # 1. Descrição do sistema adversarial
