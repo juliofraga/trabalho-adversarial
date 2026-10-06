@@ -643,3 +643,8 @@ O risco de informações subjetivas influenciarem a priorização.
 
 ## 13.2.6 O que o sistema precisa continuar preservando apesar das adaptações?
 Apesar das adaptações do adversário, o sistema deve continuar preservando a integridade do processo de priorização, a justiça na distribuição dos recursos de atendimento, a rastreabilidade das alterações realizadas e a disponibilidade e usabilidade do sistema para usuários legítimos.
+
+---
+
+# 14. Declaração de Uso de Inteligência Artificial
+O ChatGPT, da OpenAI, foi utilizado como ferramenta de apoio à análise de funcionalidades do sistema GLPI, com o objetivo de verificar sua compatibilidade com o problema proposto no trabalho, bem como para apoio à revisão e organização textual do documento. As informações e sugestões fornecidas pela ferramenta foram analisadas e validadas pelos autores, que permaneceram responsáveis pela definição do problema, pelas decisões apresentadas, pela análise do sistema e pelo conteúdo final do trabalho.
