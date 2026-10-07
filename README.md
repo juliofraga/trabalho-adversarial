@@ -573,7 +573,7 @@ A corrida armamentista surge quando o defensor implementa barreiras automatizada
 | ID	| Cenário de ameaça | Ponto de exploração	| Pressuposto ou fraqueza |	Ativo afetado	| Probabilidade |	Impacto | Risco |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | A1 | Superestimação da urgência. O usuário pode informar uma urgência superior para o problema por meio do campo de urgência do chamado.	| Campo de urgência do chamado. |	A informação fornecida representa de fato a urgência da ocorrência. | Ordem dos chamados na fila. | 3 | 2 | 6		
-| A2 | Manipular as informações para influenciar a prioridade. O usuário pode alterar ou adicionar mais informações ao chamado para elevar a prioridade. | 	Descrição e atualização das informações de urgência. | As informações fornecidas são suficientes para descrever o problema .| Classificação inadequada de prioridade. | 3 | 2 | 6						
+| A2 | Manipular as informações para influenciar a prioridade. O usuário pode alterar ou adicionar mais informações ao chamado para elevar a prioridade. | 	Descrição e atualização das informações de urgência. | As informações fornecidas são suficientes para descrever o problema .| Classificação inadequada de prioridade. | 2 | 3 | 6						
 | A3 | Repudiar a informação fornecida. O usuário pode negar posteriormente que informou prioridade urgente. | Ausência de rastreabilidade/histórico do chamado | Mecanismos de registros de alterações insuficiente | Rastreabilidade do processo de atendimento. | 2 | 2 | 4 |					
 
 # 13.1 Diagrama de ataque:
