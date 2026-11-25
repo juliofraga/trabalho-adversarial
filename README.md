@@ -1,9 +1,9 @@
 # Trabalho Análise de um Sistema Adversarial — Grupo 4
 
 
-### 📚 Trabalho 1 — 10/10/2026
+### 📚 Trabalho 2 — 05/12/2026
 
-📄 **Enunciado:** [Clique aqui para acessar o enunciado do trabalho 1](enunciado_trabalho_1.md)
+📄 **Enunciado:** [Clique aqui para acessar o enunciado do trabalho 2](docs/enunciado_trabalho_2.md)
 
 ### Integrantes
 
