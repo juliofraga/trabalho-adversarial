@@ -69,3 +69,15 @@ BACKGROUND_TICKETS: tuple[BackgroundTicket, ...] = (
         "Acho que a internet caiu para todo mundo, nenhuma página carrega aqui. Não consigo trabalhar.",
         3, 3,  # superestimação NÃO intencional: ele acredita que afeta todos
     ),
+    BackgroundTicket(
+        "datacenter.noc",
+        Problem("Link do datacenter", "Link principal do datacenter caiu; sistemas acadêmicos fora em todos os campi.", 3, 3),
+        "Link principal do datacenter caiu. Sistemas acadêmicos indisponíveis para todos os campi. Prejuízo crítico, urgente.",
+        3, 3,
+    ),
+    BackgroundTicket(
+        "paula.secretaria",
+        Problem("Pasta compartilhada", "Paula precisa de acesso a uma pasta compartilhada.", 1, 1),
+        "Preciso de acesso à pasta compartilhada da secretaria quando for possível.",
+        1, 1,
+    ),
