@@ -34,7 +34,23 @@ Fora do escopo: o GLPI real, o atendimento técnico em si e o cálculo de SLA em
 - **Sinais** (`signals.py`) são heurísticas e não veredito. Usuários legítimos também os disparam.
 - **Sem roteiro e sem invenção:** as decisões vêm do LLM a cada rodada. Se uma resposta violar as regras (chamado inexistente, revisões acima da capacidade, campo vazio), o adaptador pede **uma** correção. Se continuar inválida, a execução para com erro explícito e salva o histórico parcial. Os dublês roteirizados existem só em `tests/`.
 
+## 5. Arquitetura
 
+```
+src/glpi_adversarial/
+├── models.py      Tipos, matriz de prioridade, classificação honesta/inflada/erro, validação das respostas
+├── scenario.py    Problemas reais do Solicitante e chamados dos demais usuários (ambiente)
+├── signals.py     Monitoramento de padrões anormais (T1 §13.2.1)
+├── simulation.py  "Sistema GLPI": estado, ciclo da rodada, payoffs, reputação, fila, observações por papel, métricas
+├── agents.py      Adaptador Agno + Groq: dois Agent com instruções explícitas e output_schema Pydantic
+├── report.py      Relatório no terminal + Markdown + JSON
+├── rate_limit.py  Espaçamento entre chamadas à API
+└── cli.py         Linha de comando
+tests/             Verificações offline (sem API)
+resultados/        Evidências de cada execução
+```
+
+O simulador depende só de um protocolo `DecisionMaker` (`decide_request`, `decide_review`). Os agentes LLM o implementam em `agents.py`.
 
 ## Integrantes e contribuições
 
