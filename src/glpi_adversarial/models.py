@@ -112,3 +112,73 @@ class TechnicianAction:
     notes: tuple[str, ...]
     rationale: str
 
+
+def requester_action_from(value: object) -> RequesterAction:
+    if isinstance(value, RequesterAction):
+        result = value
+    elif isinstance(value, Mapping):
+        result = RequesterAction(
+            urgency=value.get("urgency"),  # type: ignore[arg-type]
+            impact=value.get("impact"),  # type: ignore[arg-type]
+            description=value.get("description"),  # type: ignore[arg-type]
+            rationale=value.get("rationale"),  # type: ignore[arg-type]
+        )
+    else:
+        raise InvalidAgentResponse("A resposta do solicitante não é um objeto estruturado.")
+    _validate_level(result.urgency, "urgência")
+    _validate_level(result.impact, "impacto")
+    _validate_text(result.description, "descrição do chamado")
+    if len(result.description) > MAX_DESCRIPTION_CHARS:
+        raise InvalidAgentResponse(f"A descrição passa de {MAX_DESCRIPTION_CHARS} caracteres.")
+    _validate_text(result.rationale, "justificativa do solicitante")
+    return result
+
+
+def technician_action_from(
+    value: object, pending_ids: list[str], capacity_left: int, known_rules: tuple[str, ...]
+) -> TechnicianAction:
+    if isinstance(value, TechnicianAction):
+        result = value
+    elif isinstance(value, Mapping):
+        result = TechnicianAction(
+            decisions=tuple(
+                TicketDecision(d.get("ticket_id"), d.get("action"), d.get("reason"))
+                for d in value.get("decisions", [])
+            ),
+            auto_review_rules=tuple(value.get("auto_review_rules", [])),
+            notes=tuple(value.get("notes", [])),
+            rationale=value.get("rationale"),  # type: ignore[arg-type]
+        )
+    else:
+        raise InvalidAgentResponse("A resposta do técnico não é um objeto estruturado.")
+
+    decided = [d.ticket_id for d in result.decisions]
+    if sorted(decided) != sorted(pending_ids):
+        raise InvalidAgentResponse(
+            f"O técnico precisa decidir exatamente os chamados {pending_ids}; recebido {decided}."
+        )
+    for d in result.decisions:
+        if d.action not in ("aceitar", "revisar"):
+            raise InvalidAgentResponse(f"Ação inválida para {d.ticket_id}: {d.action!r}.")
+        _validate_text(d.reason, f"motivo da decisão {d.ticket_id}")
+    reviews = sum(1 for d in result.decisions if d.action == "revisar")
+    if reviews > capacity_left:
+        raise InvalidAgentResponse(
+            f"Capacidade de revisão excedida: {reviews} revisões pedidas, {capacity_left} disponível(is)."
+        )
+    unknown = [r for r in result.auto_review_rules if r not in known_rules]
+    if unknown:
+        raise InvalidAgentResponse(f"Regras de monitoramento desconhecidas: {unknown}.")
+    if len(result.notes) > MAX_NOTES or any(
+        not isinstance(n, str) or len(n) > MAX_NOTE_CHARS for n in result.notes
+    ):
+        raise InvalidAgentResponse(f"Use no máximo {MAX_NOTES} notas curtas.")
+    _validate_text(result.rationale, "justificativa do técnico")
+    return TechnicianAction(
+        decisions=result.decisions,
+        auto_review_rules=tuple(dict.fromkeys(result.auto_review_rules)),
+        notes=tuple(n.strip() for n in result.notes if n.strip()),
+        rationale=result.rationale,
+    )
+
+
