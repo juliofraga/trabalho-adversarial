@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "glpi-adversarial-agents"
+version = "0.1.0"
+description = "Simulação adversarial Solicitante x Técnico na priorização de chamados (GLPI), com agentes Agno + Groq"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    # >=2.9.0: corrige CVE-2026-76832 (path traversal em PythonTools); não usamos tools.
+    "agno>=2.9.0,<3",
+    "groq>=1.0,<2",
+    "pydantic>=2.10,<3",
+]
+
+[project.scripts]
+glpi-adversarial = "glpi_adversarial.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
