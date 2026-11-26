@@ -41,3 +41,35 @@ SIGNAL_DESCRIPTIONS = {
     "descricao_desproporcional": "níveis altos para um problema que a própria descrição mostra como isolado ou contornável",
     "argumentacao_pressao": "a descrição usa vários termos de pressão (urgente, crítico, todos, prejuízo...)",
 }
+
+
+def detect(ticket: Ticket, user_history: list[dict[str, Any]], round_tickets: list[Ticket]) -> dict[str, bool]:
+    declared_p1 = ticket.declared_priority == "P1"
+    prior_priorities = [h["declared_priority"] for h in user_history]
+    prior_urgencies = [h["declared_urgency"] for h in user_history]
+
+    frequent_max = (
+        ticket.declared_urgency == 3
+        and len(prior_urgencies) >= 2
+        and sum(1 for u in prior_urgencies if u == 3) / len(prior_urgencies) >= 0.5
+    )
+    return_to_max = declared_p1 and "P1" in prior_priorities and any(p != "P1" for p in prior_priorities)
+    divergence = any(h["overclassification_observed"] for h in user_history)
+    many_p1 = declared_p1 and sum(1 for t in round_tickets if t.declared_priority == "P1") > len(round_tickets) / 2
+    disproportionate = (ticket.declared_impact == 3 or ticket.declared_urgency == 3) and bool(
+        _ISOLATION.search(ticket.description)
+    )
+    pressure = len(_PRESSURE.findall(ticket.description)) >= 2
+
+    return {
+        "urgencia_maxima_frequente": frequent_max,
+        "retorno_ao_maximo": return_to_max,
+        "divergencia_historica": divergence,
+        "fila_com_muitos_p1": many_p1,
+        "descricao_desproporcional": disproportionate,
+        "argumentacao_pressao": pressure,
+    }
+
+
+def fired(signals: dict[str, bool]) -> list[str]:
+    return [name for name in SIGNAL_NAMES if signals.get(name)]
