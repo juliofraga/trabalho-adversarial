@@ -23,3 +23,21 @@ _PRESSURE = re.compile(
     r"preju[ií]zo|parad[oa]s?\b|\btodos\b|todo mundo|setor inteiro|n[aã]o consigo trabalhar",
     re.IGNORECASE,
 )
+
+SIGNAL_NAMES: tuple[str, ...] = (
+    "urgencia_maxima_frequente",   # usuário frequentemente informa urgência máxima
+    "retorno_ao_maximo",           # alterações repetidas: volta ao P1 depois de declarações menores
+    "divergencia_historica",       # divergência anterior entre o declarado e o real
+    "fila_com_muitos_p1",          # grande número de chamados P1 na mesma rodada
+    "descricao_desproporcional",   # impacto/urgência altos para um problema descrito como isolado
+    "argumentacao_pressao",        # argumentação na descrição para influenciar a avaliação [A2, §13.2.3]
+)
+
+SIGNAL_DESCRIPTIONS = {
+    "urgencia_maxima_frequente": "o usuário declarou urgência 3 em metade ou mais dos seus chamados anteriores",
+    "retorno_ao_maximo": "o usuário voltou a declarar P1 depois de ter declarado prioridades menores",
+    "divergencia_historica": "já houve divergência entre o declarado e o real em chamado anterior do usuário",
+    "fila_com_muitos_p1": "mais da metade dos chamados desta rodada foram declarados P1",
+    "descricao_desproporcional": "níveis altos para um problema que a própria descrição mostra como isolado ou contornável",
+    "argumentacao_pressao": "a descrição usa vários termos de pressão (urgente, crítico, todos, prejuízo...)",
+}
