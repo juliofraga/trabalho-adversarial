@@ -81,3 +81,15 @@ BACKGROUND_TICKETS: tuple[BackgroundTicket, ...] = (
         "Preciso de acesso à pasta compartilhada da secretaria quando for possível.",
         1, 1,
     ),
+      BackgroundTicket(
+        "marina.financeiro",
+        Problem("Planilha lenta", "Uma planilha compartilhada abre devagar só para a Marina.", 1, 1),
+        "A planilha compartilhada do financeiro está abrindo lenta só para mim.",
+        1, 1,
+    ),
+    BackgroundTicket(
+        "joao.rh",
+        Problem("Outlook pede senha", "O Outlook do João pede senha repetidamente; e-mail web funciona.", 1, 1),
+        "Meu Outlook pede senha toda hora, isso deve estar afetando o setor inteiro, é urgente.",
+        2, 2,  # superestimação NÃO intencional
+    ),
