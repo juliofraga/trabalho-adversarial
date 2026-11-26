@@ -44,3 +44,13 @@ STRATEGIC_PROBLEMS: tuple[Problem, ...] = (
             "Algumas teclas do seu teclado falham. Existe um teclado reserva no armário do setor.",
             1, 1),
 )
+
+
+@dataclass(frozen=True)
+class BackgroundTicket:
+    user_id: str
+    problem: Problem
+    description: str
+    declared_urgency: int
+    declared_impact: int
+
