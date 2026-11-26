@@ -62,7 +62,6 @@ BACKGROUND_TICKETS: tuple[BackgroundTicket, ...] = (
         "O sistema financeiro não emite notas fiscais para a equipe de faturamento (6 pessoas). O fechamento é hoje.",
         3, 2,
     ),
-
     BackgroundTicket(
         "joao.rh",
         Problem("Internet", "Só o computador do João está sem internet.", 2, 1),
@@ -81,7 +80,7 @@ BACKGROUND_TICKETS: tuple[BackgroundTicket, ...] = (
         "Preciso de acesso à pasta compartilhada da secretaria quando for possível.",
         1, 1,
     ),
-      BackgroundTicket(
+    BackgroundTicket(
         "marina.financeiro",
         Problem("Planilha lenta", "Uma planilha compartilhada abre devagar só para a Marina.", 1, 1),
         "A planilha compartilhada do financeiro está abrindo lenta só para mim.",
@@ -93,3 +92,16 @@ BACKGROUND_TICKETS: tuple[BackgroundTicket, ...] = (
         "Meu Outlook pede senha toda hora, isso deve estar afetando o setor inteiro, é urgente.",
         2, 2,  # superestimação NÃO intencional
     ),
+    BackgroundTicket(
+        "datacenter.noc",
+        Problem("Disco degradado", "Storage com disco degradado no RAID; ainda sem indisponibilidade.", 3, 2),
+        "Storage com disco degradado no RAID. Sem indisponibilidade ainda, mas há risco crítico de perda de dados.",
+        3, 2,
+    ),
+    BackgroundTicket(
+        "paula.secretaria",
+        Problem("Scanner da secretaria", "Scanner da secretaria não funciona; 3 pessoas dependem dele para a matrícula.", 2, 2),
+        "O scanner da secretaria não reconhece documentos. Três pessoas usam e o prazo de matrícula é amanhã.",
+        2, 2,
+    ),
+)
