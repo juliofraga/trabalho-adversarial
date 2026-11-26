@@ -181,4 +181,11 @@ def technician_action_from(
         rationale=result.rationale,
     )
 
+def _validate_level(value: object, label: str) -> None:
+    if isinstance(value, bool) or value not in LEVELS:
+        raise InvalidAgentResponse(f"{label.capitalize()} precisa ser 1, 2 ou 3.")
 
+
+def _validate_text(value: object, label: str) -> None:
+    if not isinstance(value, str) or not value.strip():
+        raise InvalidAgentResponse(f"Campo obrigatório vazio: {label}.")
