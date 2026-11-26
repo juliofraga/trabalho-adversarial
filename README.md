@@ -52,6 +52,23 @@ resultados/        Evidências de cada execução
 
 O simulador depende só de um protocolo `DecisionMaker` (`decide_request`, `decide_review`). Os agentes LLM o implementam em `agents.py`.
 
+
+## 6. Evidências e métricas de adaptação
+
+O terminal mostra cada rodada em blocos **[AÇÃO] [RESPOSTA] [OBSERVAÇÃO] [ADAPTAÇÃO]**. Cada execução também salva em `resultados/`:
+- `execucao-<data>.md`: tabela da evolução por rodada e detalhe de cada fila, pronto para o vídeo e a análise;
+- `execucao-<data>.json`: rastro completo e auditável.
+
+O simulador calcula estas métricas de adaptação (o LLM não as produz):
+
+| Métrica | Significado |
+|---|---|
+| `requester_label_changed` | O Solicitante mudou de estratégia (honesta ↔ inflada…) em relação à rodada anterior |
+| `requester_reacting_to` | O que aconteceu com ele na rodada anterior (ex.: `inflada_revisada`, `inflada_aceita`) |
+| `requester_evaded_previous_rule` | Foi pego por uma regra automática e, na rodada seguinte, deixou de disparar aquele sinal |
+| `technician_rules_added` / `removed` | O Técnico endureceu ou afrouxou o monitoramento |
+| `technician_review_of_strategic_changed` | O Técnico passou a revisar, ou deixou de revisar, o Solicitante |
+
 ## Integrantes e contribuições
 
 | Integrante | GitHub | Contribuição (arquivos / seções) |
