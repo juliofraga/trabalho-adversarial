@@ -54,3 +54,11 @@ class BackgroundTicket:
     declared_urgency: int
     declared_impact: int
 
+
+BACKGROUND_TICKETS: tuple[BackgroundTicket, ...] = (
+    BackgroundTicket(
+        "marina.financeiro",
+        Problem("Emissão de notas", "Sistema financeiro não emite notas fiscais para a equipe de faturamento.", 3, 2),
+        "O sistema financeiro não emite notas fiscais para a equipe de faturamento (6 pessoas). O fechamento é hoje.",
+        3, 2,
+    ),
