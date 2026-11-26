@@ -49,3 +49,66 @@ def classify(true_u: int, true_i: int, decl_u: int, decl_i: int, deliberate: boo
 def is_overclassified(label: str) -> bool:
     return label in ("inflada", "erro_nao_intencional")
 
+
+class InvalidAgentResponse(ValueError):
+    """Resposta de agente fora do formato ou das regras do jogo."""
+
+
+@dataclass(frozen=True)
+class Problem:
+    """Situação real do problema, conhecida pelo solicitante e pelo simulador."""
+
+    title: str
+    facts: str
+    true_urgency: int
+    true_impact: int
+
+
+@dataclass(frozen=True)
+class Ticket:
+    ticket_id: str
+    user_id: str
+    problem: Problem
+    description: str
+    declared_urgency: int
+    declared_impact: int
+    strategic: bool            # True = chamado do agente Solicitante; False = demais usuários (ambiente)
+
+    @property
+    def declared_priority(self) -> str:
+        return priority(self.declared_urgency, self.declared_impact)
+
+    @property
+    def true_priority(self) -> str:
+        return priority(self.problem.true_urgency, self.problem.true_impact)
+
+    @property
+    def label(self) -> str:
+        return classify(
+            self.problem.true_urgency, self.problem.true_impact,
+            self.declared_urgency, self.declared_impact, deliberate=self.strategic,
+        )
+
+
+@dataclass(frozen=True)
+class RequesterAction:
+    urgency: int
+    impact: int
+    description: str
+    rationale: str
+
+
+@dataclass(frozen=True)
+class TicketDecision:
+    ticket_id: str
+    action: str            # "aceitar" | "revisar"
+    reason: str
+
+
+@dataclass(frozen=True)
+class TechnicianAction:
+    decisions: tuple[TicketDecision, ...]
+    auto_review_rules: tuple[str, ...]
+    notes: tuple[str, ...]
+    rationale: str
+
