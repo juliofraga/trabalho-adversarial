@@ -62,3 +62,10 @@ BACKGROUND_TICKETS: tuple[BackgroundTicket, ...] = (
         "O sistema financeiro não emite notas fiscais para a equipe de faturamento (6 pessoas). O fechamento é hoje.",
         3, 2,
     ),
+
+    BackgroundTicket(
+        "joao.rh",
+        Problem("Internet", "Só o computador do João está sem internet.", 2, 1),
+        "Acho que a internet caiu para todo mundo, nenhuma página carrega aqui. Não consigo trabalhar.",
+        3, 3,  # superestimação NÃO intencional: ele acredita que afeta todos
+    ),
