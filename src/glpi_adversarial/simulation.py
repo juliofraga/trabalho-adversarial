@@ -285,3 +285,209 @@ class Simulation:
         outcome["requester_notice"] = self._requester_notice(strategic_row)
         outcome["adaptation"] = self._adaptation(previous, outcome, rules_in_force, tech)
         return outcome
+
+    @staticmethod
+    def _queue_positions(rows: list[dict[str, Any]]) -> None:
+        actual = sorted(rows, key=lambda r: (PRIORITY_RANK[r["final_priority"]], r["arrival"]))
+        ideal = sorted(rows, key=lambda r: (PRIORITY_RANK[r["real_priority"]], r["arrival"]))
+        pos_actual = {r["ticket_id"]: i for i, r in enumerate(actual, start=1)}
+        pos_ideal = {r["ticket_id"]: i for i, r in enumerate(ideal, start=1)}
+        for r in rows:
+            r["queue_position"] = pos_actual[r["ticket_id"]]
+            r["ideal_position"] = pos_ideal[r["ticket_id"]]
+            r["delay"] = max(0, r["queue_position"] - r["ideal_position"])
+            r["sla_breached"] = r["queue_position"] > SLA_POSITION[r["real_priority"]]
+
+    @staticmethod
+    def _requester_notice(row: dict[str, Any]) -> str:
+        # O que o sistema mostra ao solicitante; revela a existência do monitoramento [§13.2.2].
+        if row["action"] == "revisar":
+            if row["decided_by"] == "regra":
+                prefix = f"Seu chamado foi revisado automaticamente ({row['reason']})."
+            else:
+                prefix = "Seu chamado foi revisado pelo técnico."
+            if row["final_priority"] != row["declared_priority"]:
+                return f"{prefix} Prioridade corrigida de {row['declared_priority']} para {row['final_priority']}."
+            return f"{prefix} Classificação confirmada como {row['final_priority']}."
+        return f"Classificação aceita: {row['final_priority']}. Posição na fila: {row['queue_position']}."
+
+    def _adaptation(self, previous, outcome, rules_in_force, tech: TechnicianAction) -> dict[str, Any]:
+        cur = outcome["strategic_ticket"]
+        info: dict[str, Any] = {
+            "technician_rules_added": sorted(set(tech.auto_review_rules) - set(rules_in_force)),
+            "technician_rules_removed": sorted(set(rules_in_force) - set(tech.auto_review_rules)),
+            "technician_notes_changed": list(tech.notes) != list(self.state.notes),
+            "technician_reviewed_strategic": cur["action"] == "revisar",
+        }
+        if previous is None:
+            info.update(requester_label_changed=None, requester_levels_changed=None,
+                        requester_reacting_to=None, requester_evaded_previous_rule=None,
+                        technician_review_of_strategic_changed=None)
+            return info
+        prev = previous["strategic_ticket"]
+        info["requester_label_changed"] = prev["label"] != cur["label"]
+        info["requester_levels_changed"] = prev["declared"] != cur["declared"]
+        info["requester_reacting_to"] = f"{prev['label']}_{'revisada' if prev['action'] == 'revisar' else 'aceita'}"
+        if prev["decided_by"] == "regra":
+            prev_rules = set(prev["reason"].split(": ", 1)[1].split(", "))
+            info["requester_evaded_previous_rule"] = not (prev_rules & set(cur["signals"]))
+        else:
+            info["requester_evaded_previous_rule"] = None
+        info["technician_review_of_strategic_changed"] = (prev["action"] == "revisar") != (cur["action"] == "revisar")
+        return info
+
+    # -------------------------------------------------------------- observações
+    def _requester_observation(self, n: int, problem) -> dict[str, Any]:
+        # [§6.1] o solicitante vê o próprio chamado, a prioridade, o estado e o atendimento;
+        # não vê a fila, os sinais internos nem a própria reputação.
+        return {
+            "round": n,
+            "total_rounds": self.rounds,
+            "your_problem_now": {
+                "title": problem.title,
+                "facts": problem.facts,
+                "real_urgency": problem.true_urgency,
+                "real_impact": problem.true_impact,
+                "real_priority": priority(problem.true_urgency, problem.true_impact),
+            },
+            "your_score": self.state.requester_score,
+            "goals": [
+                "ter o problema resolvido no menor tempo possível",
+                "não perder credibilidade junto ao suporte nas próximas solicitações",
+            ],
+            "rules": {
+                "priority": "urgência × impacto: produto >= 6 → P1; >= 3 → P2; senão P3. Na fila, P1 é atendido antes de P2, que é atendido antes de P3",
+                "payoffs": (
+                    "por rodada: declarar os níveis reais = 2 pontos (com ou sem revisão); inflar e ser aceito = 3; "
+                    "inflar e ser revisado = 0 e perda de credibilidade; declarar abaixo do real = 1"
+                ),
+                "review": "o técnico tem capacidade limitada de revisão por rodada e pode usar regras automáticas de monitoramento",
+                "credibility": "superestimação confirmada reduz sua credibilidade; ela não é mostrada a você",
+                "description": "você escreve a descrição do chamado (até 500 caracteres); o técnico a lê para decidir",
+            },
+            "your_previous_tickets": [
+                {
+                    "round": h["round"],
+                    "problem": h["requester"]["problem"],
+                    "real_levels": h["strategic_ticket"]["real"],
+                    "declared_levels": h["strategic_ticket"]["declared"],
+                    "description": h["requester"]["description"],
+                    "notice_from_system": h["requester_notice"],
+                    "final_priority": h["strategic_ticket"]["final_priority"],
+                    "queue_position": h["strategic_ticket"]["queue_position"],
+                    "points": h["scores"]["requester_delta"],
+                }
+                for h in self.state.history
+            ],
+        }
+
+    def _technician_observation(self, n, tickets, signals, auto_reviewed, auto_skipped, capacity_left) -> dict[str, Any]:
+        # [§6.2] o técnico vê descrição, níveis declarados, prioridade, usuário e histórico.
+        # Os níveis REAIS da rodada atual são omitidos; após o atendimento, aparecem na auditoria.
+        users = sorted({t.user_id for t in tickets})
+        return {
+            "round": n,
+            "total_rounds": self.rounds,
+            "your_score": self.state.technician_score,
+            "review_capacity_per_round": self.review_capacity,
+            "review_capacity_left": capacity_left,
+            "queue": [
+                {
+                    "ticket_id": t.ticket_id,
+                    "user_id": t.user_id,
+                    "description": t.description,
+                    "declared_urgency": t.declared_urgency,
+                    "declared_impact": t.declared_impact,
+                    "declared_priority": t.declared_priority,
+                    "signals": fired(signals[t.ticket_id]),
+                    "status": (
+                        f"já revisado por regra automática ({', '.join(auto_reviewed[t.ticket_id])})"
+                        if t.ticket_id in auto_reviewed
+                        else ("pendente — regra disparou mas não havia capacidade" if t.ticket_id in auto_skipped
+                              else "pendente — decida")
+                    ),
+                }
+                for t in tickets
+            ],
+            "pending_ticket_ids": [t.ticket_id for t in tickets if t.ticket_id not in auto_reviewed],
+            "user_profiles": {
+                u: {
+                    "reputation": self.state.reputation.get(u, INITIAL_REPUTATION),
+                    "previous_tickets": len(self.state.user_history.get(u, [])),
+                    "overclassifications_observed": sum(
+                        1 for h in self.state.user_history.get(u, []) if h["overclassification_observed"]
+                    ),
+                }
+                for u in users
+            },
+            "current_policy": {"auto_review_rules": list(self.state.auto_review_rules), "notes": list(self.state.notes)},
+            "available_rules": SIGNAL_DESCRIPTIONS,
+            "audit_of_previous_rounds": [
+                {
+                    "round": h["round"],
+                    "tickets": [
+                        {
+                            "user_id": r["user_id"],
+                            "declared": r["declared"],
+                            "real_after_service": r["real"],
+                            "signals": r["signals"],
+                            "your_action": r["action"],
+                            "decided_by": r["decided_by"],
+                            "overclassified": is_overclassified(r["label"]),
+                            "queue_delay_suffered": r["delay"],
+                        }
+                        for r in h["tickets"]
+                    ],
+                }
+                for h in self.state.history
+            ],
+            "signal_statistics": self._signal_statistics(),
+            "rules": {
+                "payoffs": (
+                    "por chamado: classificação correta aceita = 3, correta revisada = 2, "
+                    "superestimada revisada = 1, superestimada aceita = 0"
+                ),
+                "review_effect": "revisar recalcula a prioridade com os níveis reais e consome 1 unidade de capacidade",
+                "auto_review": (
+                    "regras em auto_review_rules revisam automaticamente, a partir da PRÓXIMA rodada e em ordem de chegada, "
+                    "os chamados que dispararem aqueles sinais; elas consomem a mesma capacidade"
+                ),
+                "notice": "o solicitante revisado por regra vê o nome da regra no aviso do sistema",
+                "reputation": "superestimação confirmada por revisão reduz a reputação em 20; declaração correta aumenta 5. O sistema não distingue erro não intencional de inflação",
+                "notes": "até 5 notas curtas para lembrar nas próximas rodadas",
+            },
+        }
+
+    def _signal_statistics(self) -> dict[str, dict[str, int]]:
+        stats = {s: {"fired_on_overclassified": 0, "fired_on_correct": 0} for s in SIGNAL_NAMES}
+        for h in self.state.history:
+            for r in h["tickets"]:
+                key = "fired_on_overclassified" if is_overclassified(r["label"]) else "fired_on_correct"
+                for s in r["signals"]:
+                    stats[s][key] += 1
+        return stats
+
+
+def summary(state: GameState) -> dict[str, Any]:
+    rounds = [h for h in state.trace if h.get("status") != "error"]
+    labels = [h["strategic_ticket"]["label"] for h in rounds]
+    return {
+        "rounds_completed": len(rounds),
+        "requester_score": state.requester_score,
+        "technician_score": state.technician_score,
+        "requester_strategy_sequence": labels,
+        "technician_reviewed_strategic_sequence": [h["strategic_ticket"]["action"] for h in rounds],
+        "inflations_caught": state.inflations_caught,
+        "inflations_accepted": state.inflations_accepted,
+        "unintentional_users_penalized": state.unintentional_penalized,
+        "legit_tickets_delayed": state.legit_delayed,
+        "sla_breaches": state.sla_breaches,
+        "reviews_done": state.reviews_done,
+        "requester_label_changes": sum(1 for h in rounds if h["adaptation"]["requester_label_changed"]),
+        "requester_rule_evasions": sum(1 for h in rounds if h["adaptation"]["requester_evaded_previous_rule"]),
+        "technician_policy_changes": sum(
+            1 for h in rounds if h["adaptation"]["technician_rules_added"] or h["adaptation"]["technician_rules_removed"]
+        ),
+        "final_rules": list(state.auto_review_rules),
+        "final_reputation": dict(sorted(state.reputation.items())),
+    }
