@@ -98,6 +98,6 @@ O simulador calcula estas métricas de adaptação (o LLM não as produz):
 | André Nunes Monteiro | | |
 | Júlio Eduardo da Silva Fraga | | |
 | Mariana Kegler Lorentz | | |
-| Nilton Jansenn Lopes Ribeiro Freitas | | |
+| Nilton Jansenn Lopes Ribeiro Freitas |Nilton-Jansenn | Cenário da fila (problemas do solicitante, usuários honestos e superestimação não intencional) e sinais de monitoramento de padrões anormais (scenario.py, signals.py, README §5 e§6)
 | Thalis Antunes da Silva | thalisantuness | Simulador determinístico, ciclo da rodada, regras de transição e SLA configurável (`simulation.py`, `tests/test_simulation.py`, README §3) |
 
