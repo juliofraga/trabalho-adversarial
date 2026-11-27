@@ -164,3 +164,124 @@ class Simulation:
                 tickets.append(Ticket(tid, bg.user_id, bg.problem, bg.description,  # type: ignore[union-attr]
                                       bg.declared_urgency, bg.declared_impact, False))  # type: ignore[union-attr]
         return tickets
+
+    # ------------------------------------------------------------ consequências
+    def _resolve(self, n, problem, request, tickets, signals, auto_reviewed, auto_skipped, tech: TechnicianAction, rules_in_force):
+        manual = {d.ticket_id: d for d in tech.decisions}
+        rows = []
+        tech_delta = 0
+        req_delta = 0
+        strategic_row: dict[str, Any] = {}
+
+        for arrival, t in enumerate(tickets, start=1):
+            if t.ticket_id in auto_reviewed:
+                action, by, reason = "revisar", "regra", "regra de monitoramento: " + ", ".join(auto_reviewed[t.ticket_id])
+            else:
+                d = manual[t.ticket_id]
+                action, by, reason = d.action, "tecnico", d.reason
+            label = t.label
+            over = is_overclassified(label)
+            final_u, final_i = (
+                (t.problem.true_urgency, t.problem.true_impact) if action == "revisar"
+                else (t.declared_urgency, t.declared_impact)
+            )
+            tech_payoff = TECHNICIAN_PAYOFF[("superestimada" if over else "correta", action)]
+            tech_delta += tech_payoff
+
+            rep_before = self.state.reputation.setdefault(t.user_id, INITIAL_REPUTATION)
+            rep_delta = 0
+            if over and action == "revisar":
+                rep_delta = REPUTATION_CAUGHT
+                if label == "inflada":
+                    self.state.inflations_caught += 1
+                else:
+                    self.state.unintentional_penalized += 1  # efeito colateral sobre legítimo [§13.2.4]
+            elif label == "honesta":
+                rep_delta = REPUTATION_HONEST
+            if label == "inflada" and action == "aceitar":
+                self.state.inflations_accepted += 1
+            self.state.reputation[t.user_id] = max(0, min(100, rep_before + rep_delta))
+            if action == "revisar":
+                self.state.reviews_done += 1
+
+            row = {
+                "ticket_id": t.ticket_id,
+                "user_id": t.user_id,
+                "strategic": t.strategic,
+                "arrival": arrival,
+                "description": t.description,
+                "declared": [t.declared_urgency, t.declared_impact],
+                "declared_priority": t.declared_priority,
+                "real": [t.problem.true_urgency, t.problem.true_impact],
+                "real_priority": t.true_priority,
+                "label": label,
+                "signals": fired(signals[t.ticket_id]),
+                "action": action,
+                "decided_by": by,
+                "reason": reason,
+                "auto_rule_skipped_no_capacity": t.ticket_id in auto_skipped,
+                "final_priority": priority(final_u, final_i),
+                "technician_payoff": tech_payoff,
+                "reputation_before": rep_before,
+                "reputation_delta": rep_delta,
+                "reputation_after": self.state.reputation[t.user_id],
+            }
+            if t.strategic:
+                if label in ("honesta", "inflada"):
+                    req_delta = REQUESTER_PAYOFF[(label, action)]
+                else:
+                    req_delta = REQUESTER_UNDERSTATED_PAYOFF
+                row["requester_payoff"] = req_delta
+                strategic_row = row
+            rows.append(row)
+
+        self._queue_positions(rows)
+        for r in rows:
+            if not r["strategic"] and r["delay"] > 0:
+                self.state.legit_delayed += 1
+            if r["sla_breached"]:
+                self.state.sla_breaches += 1
+            self.state.user_history.setdefault(r["user_id"], []).append({
+                "round": n,
+                "ticket_id": r["ticket_id"],
+                "declared_urgency": r["declared"][0],
+                "declared_priority": r["declared_priority"],
+                "reviewed": r["action"] == "revisar",
+                "overclassification_observed": is_overclassified(r["label"]),  # o atendimento revela o real [§12, rodada 1]
+            })
+
+        self.state.requester_score += req_delta
+        self.state.technician_score += tech_delta
+
+        previous = self.state.history[-1] if self.state.history else None
+        outcome = {
+            "round": n,
+            "requester": {
+                "problem": problem.title,
+                "urgency": request.urgency,
+                "impact": request.impact,
+                "description": request.description,
+                "rationale": request.rationale,
+                "label": strategic_row["label"],
+            },
+            "technician": {
+                "decisions": [{"ticket_id": d.ticket_id, "action": d.action, "reason": d.reason} for d in tech.decisions],
+                "rules_in_force": list(rules_in_force),
+                "new_auto_review_rules": list(tech.auto_review_rules),
+                "new_notes": list(tech.notes),
+                "rationale": tech.rationale,
+            },
+            "tickets": rows,
+            "strategic_ticket": strategic_row,
+            "scores": {
+                "requester_delta": req_delta,
+                "technician_delta": tech_delta,
+                "requester_total": self.state.requester_score,
+                "technician_total": self.state.technician_score,
+                "legit_delayed_this_round": sum(1 for r in rows if not r["strategic"] and r["delay"] > 0),
+                "sla_breaches_this_round": sum(1 for r in rows if r["sla_breached"]),
+            },
+        }
+        outcome["requester_notice"] = self._requester_notice(strategic_row)
+        outcome["adaptation"] = self._adaptation(previous, outcome, rules_in_force, tech)
+        return outcome
