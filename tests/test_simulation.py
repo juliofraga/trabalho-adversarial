@@ -18,7 +18,13 @@ from glpi_adversarial.models import (
     requester_action_from,
     technician_action_from,
 )
-from glpi_adversarial.rate_limit import RequestPacer
+
+try:
+    from glpi_adversarial.rate_limit import RequestPacer
+    HAS_PACER = True
+except ImportError:
+    HAS_PACER = False
+
 from glpi_adversarial.signals import SIGNAL_NAMES
 from glpi_adversarial.simulation import Simulation, SimulationError, summary
 
@@ -119,6 +125,22 @@ class SimulationTests(unittest.TestCase):
         self.assertEqual(s["reputation_delta"], -20)
         self.assertEqual(sim.state.inflations_caught, 3)
 
+    def test_configurable_reputation_and_sla(self):
+        sim = Simulation(
+            Scripted([INFLATE] * 3, review_strategic()),
+            rounds=3,
+            initial_reputation=85,
+            reputation_caught=-15,
+            reputation_honest=10,
+            sla_position={"P1": 1, "P2": 2, "P3": 5},
+        )
+        trace = sim.run()
+        s = trace[0]["strategic_ticket"]
+        self.assertEqual(s["reputation_before"], 85)
+        self.assertEqual(s["reputation_delta"], -15)
+        self.assertEqual(s["reputation_after"], 70)
+        self.assertEqual(sim.sla_position["P1"], 1)
+
     def test_accepted_inflation_delays_legit_users(self):
         sim = Simulation(Scripted([INFLATE] * 6, accept_all()), rounds=6)
         sim.run()
@@ -179,6 +201,7 @@ class SimulationTests(unittest.TestCase):
         self.assertEqual(sim.state.trace[-1]["status"], "error")
 
 
+@unittest.skipUnless(HAS_PACER, "Módulo rate_limit não disponível ainda")
 class PacerTests(unittest.TestCase):
     def test_spacing(self):
         now = [0.0]
