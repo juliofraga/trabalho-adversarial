@@ -79,6 +79,10 @@ class Simulation:
         background_per_round: int = 3,
         review_capacity: int = 1,
         seed: int = 42,
+        initial_reputation: int = INITIAL_REPUTATION,
+        reputation_honest: int = REPUTATION_HONEST,
+        reputation_caught: int = REPUTATION_CAUGHT,
+        sla_position: dict[str, int] | None = None,
     ):
         if rounds < MIN_ROUNDS:
             raise ValueError(f"São necessárias pelo menos {MIN_ROUNDS} rodadas.")
@@ -89,6 +93,10 @@ class Simulation:
         self.background_per_round = background_per_round
         self.review_capacity = review_capacity
         self.seed = seed
+        self.initial_reputation = initial_reputation
+        self.reputation_honest = reputation_honest
+        self.reputation_caught = reputation_caught
+        self.sla_position = dict(sla_position) if sla_position is not None else dict(SLA_POSITION)
         self.state = GameState()
         self._rng = random.Random(seed)
         self._bg_cursor = self._rng.randrange(len(BACKGROUND_TICKETS))
@@ -188,16 +196,16 @@ class Simulation:
             tech_payoff = TECHNICIAN_PAYOFF[("superestimada" if over else "correta", action)]
             tech_delta += tech_payoff
 
-            rep_before = self.state.reputation.setdefault(t.user_id, INITIAL_REPUTATION)
+            rep_before = self.state.reputation.setdefault(t.user_id, self.initial_reputation)
             rep_delta = 0
             if over and action == "revisar":
-                rep_delta = REPUTATION_CAUGHT
+                rep_delta = self.reputation_caught
                 if label == "inflada":
                     self.state.inflations_caught += 1
                 else:
                     self.state.unintentional_penalized += 1  # efeito colateral sobre legítimo [§13.2.4]
             elif label == "honesta":
-                rep_delta = REPUTATION_HONEST
+                rep_delta = self.reputation_honest
             if label == "inflada" and action == "aceitar":
                 self.state.inflations_accepted += 1
             self.state.reputation[t.user_id] = max(0, min(100, rep_before + rep_delta))
@@ -286,8 +294,7 @@ class Simulation:
         outcome["adaptation"] = self._adaptation(previous, outcome, rules_in_force, tech)
         return outcome
 
-    @staticmethod
-    def _queue_positions(rows: list[dict[str, Any]]) -> None:
+    def _queue_positions(self, rows: list[dict[str, Any]]) -> None:
         actual = sorted(rows, key=lambda r: (PRIORITY_RANK[r["final_priority"]], r["arrival"]))
         ideal = sorted(rows, key=lambda r: (PRIORITY_RANK[r["real_priority"]], r["arrival"]))
         pos_actual = {r["ticket_id"]: i for i, r in enumerate(actual, start=1)}
@@ -296,7 +303,7 @@ class Simulation:
             r["queue_position"] = pos_actual[r["ticket_id"]]
             r["ideal_position"] = pos_ideal[r["ticket_id"]]
             r["delay"] = max(0, r["queue_position"] - r["ideal_position"])
-            r["sla_breached"] = r["queue_position"] > SLA_POSITION[r["real_priority"]]
+            r["sla_breached"] = r["queue_position"] > self.sla_position[r["real_priority"]]
 
     @staticmethod
     def _requester_notice(row: dict[str, Any]) -> str:
@@ -412,7 +419,7 @@ class Simulation:
             "pending_ticket_ids": [t.ticket_id for t in tickets if t.ticket_id not in auto_reviewed],
             "user_profiles": {
                 u: {
-                    "reputation": self.state.reputation.get(u, INITIAL_REPUTATION),
+                    "reputation": self.state.reputation.get(u, self.initial_reputation),
                     "previous_tickets": len(self.state.user_history.get(u, [])),
                     "overclassifications_observed": sum(
                         1 for h in self.state.user_history.get(u, []) if h["overclassification_observed"]
