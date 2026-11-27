@@ -17,6 +17,27 @@ Implementamos **uma única interação**: a declaração de urgência e impacto 
 Fora do escopo: o GLPI real, o atendimento técnico em si e o cálculo de SLA em tempo real. A fila é representada pela posição de atendimento.
 
 
+## 3. Ciclo de cada rodada
+
+```
+AÇÃO        Solicitante recebe a situação REAL do problema e decide urgência, impacto e descrição
+              │
+            Sistema monta a fila: o chamado dele + 3 chamados de outros usuários (ordem de chegada aleatória, seed fixa)
+            e calcula os sinais de monitoramento de cada chamado
+              │
+            Regras automáticas (definidas pelo Técnico na rodada ANTERIOR) revisam os chamados que dispararem,
+            em ordem de chegada, enquanto houver capacidade
+              │
+RESPOSTA    Técnico aceita ou revisa os chamados pendentes (dentro da capacidade restante)
+            e define as regras e notas da próxima rodada
+              │
+OBSERVAÇÃO  Sistema calcula a prioridade final, a fila, os payoffs e a reputação.
+            Solicitante recebe o aviso do sistema (que pode citar a regra que o pegou).
+            Técnico recebe a auditoria: níveis reais revelados pelo atendimento e atraso sofrido por cada chamado
+              │
+ADAPTAÇÃO   Nova política do Técnico passa a valer; o Solicitante replaneja a partir do histórico
+```
+
 ## 4. Regras do jogo (determinísticas)
 
 - **Prioridade:** urgência × impacto, com P1 para produto ≥ 6, P2 para ≥ 3 e P3 para o resto. A fila atende P1 antes de P2, e P2 antes de P3; em empate, vale a ordem de chegada.
@@ -78,4 +99,5 @@ O simulador calcula estas métricas de adaptação (o LLM não as produz):
 | Júlio Eduardo da Silva Fraga | | |
 | Mariana Kegler Lorentz | | |
 | Nilton Jansenn Lopes Ribeiro Freitas | | |
+| Thalis Antunes da Silva | thalisantuness | Simulador determinístico, ciclo da rodada, regras de transição e SLA configurável (`simulation.py`, `tests/test_simulation.py`, README §3) |
 
